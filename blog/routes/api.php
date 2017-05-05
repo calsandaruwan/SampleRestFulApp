@@ -19,8 +19,8 @@ use Illuminate\Http\Request;
 Route::post('/article/create', 'Api\ApiArticleController@createArticle');
 Route::get('/articles', 'Api\ApiArticleController@getArticle');
 Route::get('/article/{id}', 'Api\ApiArticleController@getArticle');
-Route::patch('/article/edit/{id}', 'Api\ApiArticleController@editArticle');
-Route::delete('/article/delete/{id}', 'Api\ApiArticleController@deleteArticle');
+Route::post('/article/edit/{id}', 'Api\ApiArticleController@editArticle');
+Route::post('/article/delete/{id}', 'Api\ApiArticleController@deleteArticle');
 
 /*
  * Author related API routes
