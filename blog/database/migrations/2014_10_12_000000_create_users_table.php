@@ -13,6 +13,8 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
+        //My local mysql version is older than required version. so this line has to be added
+        Schema::defaultStringLength(191); 
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
