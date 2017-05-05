@@ -13,6 +13,17 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+/*
+ * Article related API routes
+ */
+Route::post('/article/create', 'Api\ApiArticleController@createArticle');
+Route::get('/articles', 'Api\ApiArticleController@getArticle');
+Route::get('/article/{id}', 'Api\ApiArticleController@getArticle');
+Route::patch('/article/edit/{id}', 'Api\ApiArticleController@editArticle');
+Route::delete('/article/delete/{id}', 'Api\ApiArticleController@deleteArticle');
+
+/*
+ * Author related API routes
+ */
+Route::post('/author/create', 'Api\ApiAuthorController@createAuthor');
+Route::get('/author/{id}', 'Api\ApiAuthorController@getAuthor');
