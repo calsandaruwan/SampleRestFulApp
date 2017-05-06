@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Repos\AuthorRepo;
+use App\Interfaces\AuthorInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +25,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        //Register interfaces
+        $this->app->bind('App\Interfaces\AuthorInterface',  'App\Repos\AuthorRepo' );
+        $this->app->bind('App\Interfaces\ArticleInterface',  'App\Repos\ArticleRepo' );
     }
 }
