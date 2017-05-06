@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Routing\Controller as BaseController;
 use App\Interfaces\ArticleInterface;
-use App\Article;
+Use Exception;
 
 class ApiArticleController extends BaseController {
 
@@ -16,11 +16,29 @@ class ApiArticleController extends BaseController {
     }
 
     public function getAll() {
-        return $this->article->getAll();
+        $response = $this->article->getAll();
+        if ($response) {
+            return format_response([
+                'error' => 'false',
+                'data' => $response
+            ]);
+        }
+        return format_response([
+            'message' => 'No record found'
+        ]);
     }
-    
+
     public function get($id) {
-        return $this->article->get($id);
+        try {
+            return format_response([
+                'error' => 'false',
+                'data' => $this->article->get($id)
+            ]);
+        } catch (Exception $e) {
+            return format_response([
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 
     public function createArticle() {
@@ -42,13 +60,26 @@ class ApiArticleController extends BaseController {
 
                 $response = $this->article->create();
                 if ($response) {
-                    return $response;
+                    return format_response([
+                        'error' => 'false',
+                        'data' => $response
+                    ]);
                 }
+                return format_response([
+                    'message' => "Something Went Wrong",
+                    'data' => \Request::all()
+                ]);
             } else {
-                return $validator->getMessageBag()->toArray();
+                return format_response([
+                    'message' => $validator->getMessageBag()->toArray(),
+                    'data' => \Request::all()
+                ]);
             }
         } catch (Exception $e) {
-            return $e->getMessage();
+            return format_response([
+                'message' => $e->getMessage(),
+                'data' => \Request::all()
+            ]);
         }
     }
 
@@ -71,18 +102,47 @@ class ApiArticleController extends BaseController {
 
                 $response = $this->article->edit($id);
                 if ($response) {
-                    return $article;
+                    return format_response([
+                        'error' => 'false',
+                        'data' => $response
+                    ]);
                 }
+                return format_response([
+                    'message' => "Something went wrong",
+                    'data' => \Request::all()
+                ]);
             } else {
-                return $validator->getMessageBag()->toArray();
+                return format_response([
+                    'message' => $validator->getMessageBag()->toArray(),
+                    'data' => \Request::all()
+                ]);
             }
         } catch (Exception $e) {
-            return $e->getMessage();
+            return format_response([
+                'message' => $e->getMessage(),
+                'data' => \Request::all()
+            ]);
         }
     }
 
     public function deleteArticle($id) {
-        $this->article->delete($id);
+        try {
+            $response = $this->article->delete($id);
+            if ($response) {
+                return format_response([
+                    'error' => 'false',
+                    'data' => $response
+                ]);
+            }
+            return format_response([
+                'message' => "Something went wrong",
+                'data' => \Request::all()
+            ]);
+        } catch (Exception $e) {
+            return format_response([
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 
 }

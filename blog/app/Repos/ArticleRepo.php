@@ -15,7 +15,11 @@ class ArticleRepo implements ArticleInterface {
 
     //get all articles
     public function getAll() {
-        return $this->article->all();
+        $data =  $this->article->orderBy('updated_at', 'desc')->get();
+        if(count($data)){
+            return $data;
+        }
+        return false;
     }
 
     //get single article
@@ -55,7 +59,10 @@ class ArticleRepo implements ArticleInterface {
     //delete article
     public function delete($id) {
         $article = $this->article->findOrfail($id);
-        $article->delete();
+        if($article->delete()){
+            return $article;
+        }
+        return false;
     }
 
 }

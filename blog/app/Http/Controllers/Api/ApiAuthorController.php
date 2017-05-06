@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Validator;
 Use App\Interfaces\AuthorInterface;
+Use Exception;
 
 class ApiAuthorController extends BaseController {
 
@@ -15,20 +16,33 @@ class ApiAuthorController extends BaseController {
     }
 
     public function createAuthor() {
-        $rules = array(
-            'name' => 'required',
-        );
+        try {
+            $rules = array(
+                'name' => 'required',
+            );
 
-        $validator = Validator::make(\Request::all(), $rules);
+            $validator = Validator::make(\Request::all(), $rules);
 
-        if ($validator->passes()) {
-            $result = $this->author->create(\Request::all());
-            if ($result) {
-                return $result;
+            if ($validator->passes()) {
+                $result = $this->author->create(\Request::all());
+                if ($result) {
+                    return $result;
+                }
+                return format_response([
+                    'message' => "Something went wrong",
+                    'data' => \Request::all()
+                ]);
+            } else {
+                return format_response([
+                    'message' => $validator->getMessageBag()->toArray(),
+                    'data' => \Request::all()
+                ]);
             }
-            return false;
-        } else {
-            return $validator->getMessageBag()->toArray();
+        } catch (Exception $e) {
+            return format_response([
+                'message' => $e->getMessage(),
+                'data' => \Request::all()
+            ]);
         }
     }
 
