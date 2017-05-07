@@ -37,11 +37,23 @@ http://www.domain.com/api/
 - Create article
 ```sh 
 - {{baseUrl}}/article/create
+
+sample data-
+author_id:2
+title:Test
+url:http://www.sampletest.url
+content:this is the content test
 ```
 
 - Edit article
 ```sh
 - {{baseUrl}}/article/edit/id
+
+sample data-
+author_id:2
+title:Test
+url:http://www.sampletest.url
+content:this is the content test
 ```
 
 - Delete article
@@ -52,4 +64,7 @@ http://www.domain.com/api/
 - Create author
 ```sh
 - {{baseUrl}}author/create
+
+sampledata- 
+name:Sunimal
 ```
