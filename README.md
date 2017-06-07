@@ -1,4 +1,4 @@
-# RiverviewB2B
+# SampleRestFulApp
 endpoints for mobile
 
 # How to setup
